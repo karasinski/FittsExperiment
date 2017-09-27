@@ -9,6 +9,7 @@ public class InputHandler : MonoBehaviour
     private Vector3 zero = new Vector3(0, 0, 5);
     private Quaternion rotation;
     private Vector3 delta;
+    private List<Dictionary<string, object>> TrialData;
 
     public GameObject Target, Control;
 
@@ -21,14 +22,14 @@ public class InputHandler : MonoBehaviour
         return new Vector3(x, y, 0);
     }
 
-    private void setRotation()
+    private void SetRotation()
     {
         int choice = rotations[Random.Range(0, rotations.Count)];
         rotation = Quaternion.Euler(0, 0, choice);
-        print(choice);
+        //print(choice);
     }
 
-    private IEnumerator delayedInput(Vector3 delta)
+    private IEnumerator DelayedInput(Vector3 delta)
     {
         if (delay > 0)
         {
@@ -38,16 +39,33 @@ public class InputHandler : MonoBehaviour
         Control.transform.position += delta;
     }
 
+    private void Start()
+    {
+        ReadCSV("trials");
+    }
+
     private void Update()
     {
         delta = rotation * new Vector3(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"), 0.0f) * Time.deltaTime * speed;
-        StartCoroutine(delayedInput(delta));
+        StartCoroutine(DelayedInput(delta));
     }
 
     private void OnTriggerEnter(Collider other)
     {
         Control.transform.position = zero;
         Target.transform.position = zero + RandomPointOnUnitCircle(10);
-        setRotation();
+        SetRotation();
+    }
+
+    private void ReadCSV(string filename)
+    {
+        TrialData = CSVReader.Read(filename);
+        //for (var i = 0; i < TrialData.Count; i++)
+        //{
+        //    print((i + 1) +
+        //          "trial " + TrialData[i]["Trial"] + " " +
+        //          "rotation " + TrialData[i]["Rotation"] + " " +
+        //          "delay " + TrialData[i]["Delay"]);
+        //}
     }
 }
