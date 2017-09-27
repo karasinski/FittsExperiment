@@ -390,9 +390,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 30
-  delay: 0.5
   Target: {fileID: 304730860}
   Control: {fileID: 1904603243}
+  filename: trials
 --- !u!1 &2122739321
 GameObject:
   m_ObjectHideFlags: 0
