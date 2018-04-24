@@ -5,7 +5,9 @@ using UnityEngine;
 public class InputHandler : MonoBehaviour
 {
     public float speed, delay;
-    private List<int> rotations = new List<int>(new int[] { 45, -45, 0, 90, -90 });
+    private List<int> rotations = new List<int>(new int[] { 30, -30, 60, -60 });
+    //private List<int> rotations = new List<int>(new int[] { 45 });
+    //public int angle;
     private Vector3 zero = new Vector3(0, 0, 5);
     private Quaternion rotation;
     private Vector3 delta;
@@ -40,7 +42,8 @@ public class InputHandler : MonoBehaviour
 
     private void Update()
     {
-        delta = rotation * new Vector3(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"), 0.0f) * Time.deltaTime * speed;
+        delta = rotation * new Vector3(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"), 0.0F) * Time.deltaTime * speed;
+        //delta = rotation * new Vector3(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"), Input.GetAxisRaw("Twist")) * Time.deltaTime * speed;
         StartCoroutine(delayedInput(delta));
     }
 
@@ -49,5 +52,6 @@ public class InputHandler : MonoBehaviour
         Control.transform.position = zero;
         Target.transform.position = zero + RandomPointOnUnitCircle(10);
         setRotation();
+        System.Threading.Thread.Sleep(1000);
     }
 }
