@@ -57,6 +57,7 @@ public class InputHandler : MonoBehaviour
             print("Done!");
             Application.Quit();
             UnityEditor.EditorApplication.isPlaying = false;
+            return;
         }
 
         // Start a new data log
